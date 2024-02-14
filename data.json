@@ -1,0 +1,12 @@
+[
+    {
+        "name": "John Doe",
+        "birthDate": "2000-01-01",
+        "image": "https://example.com/image1.jpg"
+    },
+    {
+        "name": "Jane Doe",
+        "birthDate": "1995-05-15",
+        "image": "https://example.com/image2.jpg"
+    }
+]

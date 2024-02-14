@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthdays</title>
+</head>
+
+<body>
+    <div id="cardView"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            let cardView = $('#cardView');
+            data.forEach(person => {
+                let birthday = new Date(person.birthDate);
+                let today = new Date();
+                let diffMs = (birthday - today);
+                let diffDays = Math.round(diffMs / 86400000); //divide by 1000*60*60*24
+                cardView.append(`
+                    <div class="card">
+                        <img src="${person.image}" alt="${person.name}" class="image">
+                        <div class="text">
+                            <p class="name">${person.name}</p>
+                            <p class="dateOfBirth">Birthday: ${person.birthDate}</p>
+                            <p class="daysLeft">Days left: ${diffDays >= 0 ? diffDays : 0}</p>
+                        </div>
+                    </div>
+                `)
+            });
+        })
+        .catch(error => console.error('Error:', error));
+});
+    </script>
+</body>
+
+</html>
