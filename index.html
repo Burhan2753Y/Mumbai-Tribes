@@ -174,6 +174,9 @@
                 <span style="font-size: x-large;">Welcome to Mumbai Tribes</span>
             </div>
         </div>
+        <div style="text-align: center;">
+            <p>Kindly Fill this form for your data to show here.<a href="https://forms.gle/67orMTGnEHoocobZ9">Link</a></p>
+        </div>
         <div ng-repeat="item in myList" style="margin: 0px;">
         <div class="birthday-container" >
             <img src={{item.img}} alt="Persons Image" height="200px" style="grid-column:1;">
@@ -226,36 +229,34 @@
                 ]
 
 
-                // Select the form element
-                const form = document.getElementById("loginForm");
+                //const form = document.getElementById("loginForm");
 
-                // Add an event listener to the form that listens for the 'submit' event
-                form.addEventListener("submit", function (event) {
-                    // Prevent the form from submitting normally
-                    event.preventDefault();
+                
+                // form.addEventListener("submit", function (event) {
+                //     event.preventDefault();
 
-                    if ($scope.user.name === '' || $scope.user.password === '') {
-                        $scope.errorcolor = { color: "red" }
-                        $scope.errorMessage = "Please enter both Username and Password";
-                    }
-                    else {
-                        // console.log()
-                        if ($scope.user.name === "Burhan") {
-                            if ($scope.user.password === "40800664") {
-                                $scope.errorcolor = { color: "green" }
-                                $scope.errorMessage = "Log in Sucessfull"
-                            }
-                            else {
-                                $scope.errorcolor = { color: "red" };
-                                $scope.errorMessage = "Invalid Password!";
-                            }
-                        }
-                        else {
-                            $scope.errorcolor = { color: "red" };
-                            $scope.errorMessage = "Invalid Username!";
-                        }
-                    }
-                });
+                //     if ($scope.user.name === '' || $scope.user.password === '') {
+                //         $scope.errorcolor = { color: "red" }
+                //         $scope.errorMessage = "Please enter both Username and Password";
+                //     }
+                //     else {
+                //         // console.log()
+                //         if ($scope.user.name === "Burhan") {
+                //             if ($scope.user.password === "40800664") {
+                //                 $scope.errorcolor = { color: "green" }
+                //                 $scope.errorMessage = "Log in Sucessfull"
+                //             }
+                //             else {
+                //                 $scope.errorcolor = { color: "red" };
+                //                 $scope.errorMessage = "Invalid Password!";
+                //             }
+                //         }
+                //         else {
+                //             $scope.errorcolor = { color: "red" };
+                //             $scope.errorMessage = "Invalid Username!";
+                //         }
+                //     }
+                // });
             });
     </script>
 </body>
