@@ -2,28 +2,31 @@
 
 <head>
     <meta charsetUTF-8>
-    <meta name="" content="width=-width, initialscale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mumbai Tribes</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f5f5f5;
         }
-        .navbarcustom{
+
+        .navbarcustom {
             box-shadow: 0px 5px 10px grey;
-            background-color: #4CAF50;
+            background-color: lightgreen;
             color: #000000;
         }
+
         .queue-line-animated {
             display: flex;
             justify-content: space-between;
             animation: queueLine 12s linear infinite;
             animation-delay: 0ms;
-            
+
         }
 
         @keyframes queueLine {
@@ -89,14 +92,75 @@
             background-color: #f5f5f5;
             color: #333;
         }
-        #errorMessage{
+
+        #errorMessage {
             font-weight: bold;
-            color: red;
+        }
+
+        .birthday-container {
+            background-color: lightgreen;
+            font-size: xx-large;
+            padding-left: 10%;
+            padding-right: 10%;
+            display: grid;
+        }
+
+        .birthday-container .my_span_1 {
+            grid-column: 2;
+            line-height: 200px;
+            text-align: center;
+        }
+
+        .birthday-container .my_span_2 {
+            grid-column: 3;
+            line-height: 200px;
+            text-align: center;
+        }
+
+        @media (max-width: 1000px) {
+            .birthday-container {
+                display: block;
+            }
+
+            .birthday-container img,
+            .birthday-container .my_span_1,
+            .birthday-container .my_span_2 {
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+                height: auto;
+                line-height: normal;
+                padding-bottom: 10px;
+            }
+
+            .birthday-container img {
+                width: auto;
+                height: 50%;
+            }
+
+            .welcome-container {
+                text-align: center;
+            }
+
+            .welcome-text {
+                margin: 0 auto;
+            }
+        }
+
+        hr {
+            border-style: solid;
+
+            border-color: black;
+
+            border-width: 1px;
+
+            height: 0;
+            margin:0;
         }
     </style>
 </head>
 
-<body>
+<body ng-app="MyApp" ng-controller="mycont">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light navbarcustom">
             <a class="navbar-brand" href="#">Mumbai Tribes</a>
@@ -124,27 +188,34 @@
     </header>
 
     <main>
-
-    </main>
-    <div class="welcome-container">
-        <div class="welcome-text queue-line-animated">
-            <h1>Welcome to Mumbai Tribes</h1>
+        <div class="welcome-container">
+            <div class="welcome-text queue-line-animated">
+                <span style="font-size: x-large;">Welcome to Mumbai Tribes</span>
+            </div>
         </div>
-    </div>
-    <div class="form-container">
-        <h1>Login</h1>
-        <form id="loginForm">
-            <label for="username">Username</label>
-            <input type="text" id="username" placeholder="Enter username">
+        <div ng-repeat="item in myList" style="margin: 0px;">
+        <div class="birthday-container" >
+            <img src={{item.img}} alt="Persons Image" height="200px" style="grid-column:1;">
+            <p class="my_span_1"><b>{{item.name}}</b></p>
+            <p class="my_span_2">{{item.dob}}</p>
+            </div>
+            <hr>
+        </div>
+        
+        <div class="form-container">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <label for="username">Username</label>
+                <input type="text" ng-model="user.name" placeholder="Enter username">
 
-            <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter password">
+                <label for="password">Password</label>
+                <input type="password" ng-model="user.password" placeholder="Enter password">
 
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-        <span id="errorMessage"></span><br /><br />
-    </div>
-
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <span id="errorMessage" ng-style="errorcolor">{{errorMessage}}</span><br /><br />
+        </div>
+    </main>
 
     <footer class="bg-light py-3">
         <div class="container text-center">
@@ -154,35 +225,57 @@
         </div>
     </footer>
     <script>
-        // Select the form element
-        const form = document.getElementById("loginForm");
-
-        // Add an event listener to the form that listens for the 'submit' event
-        form.addEventListener("submit", function (event) {
-            // Prevent the form from submitting normally
-            event.preventDefault();
-
-            // Get the username from the form
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            if (username === '' || password === '') {
-                document.querySelector("#errorMessage").innerHTML = "Please enter both Username and Password";
-            }
-            else{
-                if (username==="Burhan") {
-                    if(password==="40800664"){
-                        window.location.href = "admin.html";
-                    }
-                    else{
-                        document.querySelector("#errorMessage").innerHTML ="Invalid Password!";
-                    }
+        angular.module('MyApp', [])
+            .controller('mycont', function ($scope) {
+                $scope.user = {
+                    name: "",
+                    password: ""
+                };
+                $scope.errorMessage = "";
+                $scope.myList = [{
+                    name: "Burhanuddin Tinwala",
+                    img: "avatar.png",
+                    dob: "12 May 2005"
+                },
+                {
+                    name: "Shabbir Tinwala",
+                    img: "avatar.png",
+                    dob: "06 July 1976"
                 }
-                else{
-                    document.querySelector("#errorMessage").innerHTML ="Invalid Username!";
-                }
-            }
-        });
+                ]
+
+
+                // Select the form element
+                const form = document.getElementById("loginForm");
+
+                // Add an event listener to the form that listens for the 'submit' event
+                form.addEventListener("submit", function (event) {
+                    // Prevent the form from submitting normally
+                    event.preventDefault();
+
+                    if ($scope.user.name === '' || $scope.user.password === '') {
+                        $scope.errorcolor = { color: "red" }
+                        $scope.errorMessage = "Please enter both Username and Password";
+                    }
+                    else {
+                        // console.log()
+                        if ($scope.user.name === "Burhan") {
+                            if ($scope.user.password === "40800664") {
+                                $scope.errorcolor = { color: "green" }
+                                $scope.errorMessage = "Log in Sucessfull"
+                            }
+                            else {
+                                $scope.errorcolor = { color: "red" };
+                                $scope.errorMessage = "Invalid Password!";
+                            }
+                        }
+                        else {
+                            $scope.errorcolor = { color: "red" };
+                            $scope.errorMessage = "Invalid Username!";
+                        }
+                    }
+                });
+            });
     </script>
 </body>
 
